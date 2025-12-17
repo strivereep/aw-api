@@ -1,0 +1,363 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearerAuth: []
+paths:
+  "/api/v1/auth/signin":
+    post:
+      summary: signin auth
+      tags:
+      - Auth
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: integer
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          token:
+                            type: string
+                          name:
+                            type: string
+                          email:
+                            type: string
+                          country:
+                            type: string
+                          createdAt:
+                            type: string
+                            format: datetime
+                          updatedAt:
+                            type: string
+                            format: datetime
+                        required:
+                        - token
+                        - name
+                        - email
+                        - country
+                        - createdAt
+                        - updatedAt
+                    required:
+                    - id
+                    - type
+                    - attributes
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/api/v1/contents":
+    get:
+      summary: list contents
+      tags:
+      - Contents
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: integer
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            title:
+                              type: string
+                            body:
+                              type: string
+                            createdAt:
+                              type: string
+                              format: datetime
+                            updatedAt:
+                              type: string
+                              format: datetime
+                          required:
+                          - title
+                          - body
+                          - createdAt
+                          - updatedAt
+                      required:
+                      - id
+                      - type
+                      - attributes
+                required:
+                - data
+    post:
+      summary: create content
+      tags:
+      - Contents
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: integer
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          body:
+                            type: string
+                          createdAt:
+                            type: string
+                            format: datetime
+                          updatedAt:
+                            type: string
+                            format: datetime
+                        required:
+                        - title
+                        - body
+                        - createdAt
+                        - updatedAt
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+              required:
+              - title
+              - body
+  "/api/v1/contents/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    put:
+      summary: update content
+      tags:
+      - Contents
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: integer
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          body:
+                            type: string
+                          createdAt:
+                            type: string
+                            format: datetime
+                          updatedAt:
+                            type: string
+                            format: datetime
+                        required:
+                        - title
+                        - body
+                        - createdAt
+                        - updatedAt
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - error
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+        required: true
+    delete:
+      summary: delete content
+      tags:
+      - Contents
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+  "/api/v1/users/signup":
+    post:
+      summary: create user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: integer
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          token:
+                            type: string
+                          name:
+                            type: string
+                          email:
+                            type: string
+                          country:
+                            type: string
+                          createdAt:
+                            type: string
+                            format: datetime
+                          updatedAt:
+                            type: string
+                            format: datetime
+                        required:
+                        - token
+                        - name
+                        - email
+                        - country
+                        - createdAt
+                        - updatedAt
+                    required:
+                    - id
+                    - type
+                    - attributes
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                password:
+                  type: string
+                email:
+                  type: string
+                country:
+                  type: string
+              required:
+              - firstName
+              - lastName
+              - password
+              - email
+servers:
+- url: "{defaultHost}"
+  variables:
+    defaultHost:
+      default: http://localhost:3000

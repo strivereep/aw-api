@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       country: permitted_params[:country]
     )
     if user.save
-      render json: { message: 'Successfully created!' }, status: :created
+      render json: UserSerializer.new(user.reload), status: :created
     else
       render json: { error: user.errors.full_messages }, status: :unprocessable_entity
     end
