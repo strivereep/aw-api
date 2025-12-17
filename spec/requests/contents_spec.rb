@@ -86,7 +86,7 @@ RSpec.describe 'contents', type: :request do
       consumes 'application/json'
       produces 'application/json'
 
-      parameter name: :content, in: :body, schema: {
+      parameter name: :content, in: :body, required: true, schema: {
         type: :object,
         properties: {
           title: { type: :string },
@@ -157,9 +157,9 @@ RSpec.describe 'contents', type: :request do
           end
         end
 
-        context 'when title exists for the same user' do
+        context 'when title exists (case insentive) for the same user' do
           before do
-            create(:content, user: user, title: content[:title])
+            create(:content, user: user, title: content[:title].downcase)
           end
 
           response(422, 'unprocessable entity') do

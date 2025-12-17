@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   scope :api do
     scope :v1 do
+      get 'up' => 'health#up'
       post '/users/signup' => 'users#create'
       post '/auth/signin'
 

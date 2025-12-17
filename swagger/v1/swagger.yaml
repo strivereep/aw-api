@@ -189,6 +189,7 @@ paths:
               required:
               - title
               - body
+        required: true
   "/api/v1/contents/{id}":
     parameters:
     - name: id
